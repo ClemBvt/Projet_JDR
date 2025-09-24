@@ -25,8 +25,15 @@ SECRET_KEY = 'django-insecure-u_vr@1*ni=d)%_-oc(kuwg^a4krrpxnhe_z160b&-=!b1kl%by
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "https://38d47f0e99b7.ngrok-free.app",
+    "localhost",
+    "127.0.0.1"
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://38d47f0e99b7.ngrok-free.app',  # ton URL ngrok
+]
 
 # Application definition
 
@@ -36,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'polls'
 ]
 
 MIDDLEWARE = [

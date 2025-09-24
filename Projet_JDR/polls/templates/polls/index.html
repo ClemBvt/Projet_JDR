@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet JDR</title>
+</head>
+<body>
+    <h1>Bienvenue</h1>
+    <p>Veuillez renseigner le nom du joueur :</p>
+    <form action="{% url 'setName' %}" method="post">
+        {% csrf_token %}
+        <label for="character_name">Nom de ton personnage :</label>
+        <input type="text" id="character_name" name="character_name" required>
+        <button type="submit">Valider</button>
+    </form>
+    <p>Je suis le joueur {{player.getName}}</p>
+    <p>Ennemis : {{ennemi.getName}} hp : {{ennemi.getHp}}</p>
+   <a href="{% url 'attack' %}">Attack</a>
+</body>
+</html>
