@@ -22,6 +22,6 @@ Tests unitaires :
 Test sur une fonction aléatoire : 
 - test_random_turn : Vérifie que le premier tour est bien donné à l'utilisateur ou  au perosnnage aléatoirement. Par défault le test commence de 0, puis on force à passer à 1.
 
-Test en selenium :
+Test en Selenium :
 - testCharacter : Test les fonctions de créer un personnage et attaquer l'ennemi.
 
