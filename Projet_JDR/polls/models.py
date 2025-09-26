@@ -37,8 +37,8 @@ class Character(models.Model):
     hp = models.IntegerField(default=100)
     attack = models.IntegerField(default=10)
     # On peut lier un objet (Sword ou Potion) via une clé étrangère optionnelle
-    sword = models.ForeignKey(Sword, on_delete=models.SET_NULL, null=True, blank=True)
-    potion = models.ForeignKey(Potion, on_delete=models.SET_NULL, null=True, blank=True)
+    sword = models.ForeignKey(Sword, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    potion = models.ForeignKey(Potion, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     def __str__(self):
         return self.name
@@ -47,3 +47,10 @@ class Character(models.Model):
     def attack_target(self, target):
         target.hp -= self.attack
         target.save()
+
+class GameSession(models.Model):
+    turn = models.IntegerField(default=0)
+    character = models.ForeignKey(Character, on_delete=models.SET_NULL, null=True, blank=True, related_name="as_main_character_sessions",)
+    enemy = models.ForeignKey(Character, on_delete=models.SET_NULL, null=True, blank=True, related_name="as_enemy_sessions",)
+    status = models.CharField(max_length=100)
+    current_player = models.ForeignKey(Character, on_delete=models.SET_NULL, null=True, blank=True, related_name="as_current_player_sessions",)

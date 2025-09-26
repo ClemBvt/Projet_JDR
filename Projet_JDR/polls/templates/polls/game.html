@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet JDR</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #f0f4ff, #d0e0ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        .hp-bar {
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .hp-bar-inner {
+            height: 100%;
+            background: #4caf50;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.3s ease;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: #007bff;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .finished {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeu de rôle tour par tour</h1>
+
+    {% if session.status == "finish" %}
+        <div class="message finished">Partie terminée</div>
+        {% if session.character.hp <= 0 %}
+            <div class="message">Vous avez perdu...</div>
+        {% endif %}
+        {% if session.enemy.hp <= 0 %}
+            <div class="message">Vous avez gagné !</div>
+        {% endif %}
+        <a class="btn" href="{% url 'index' %}">Recommencer</a>
+    {% else %}
+        <div class="game-container">
+            <div class="card">
+                <h2>{{ session.character.name }}</h2>
+                <div class="hp-bar">
+                    <div class="hp-bar-inner" style="width: {{ session.character.hp|floatformat:0 }}%">
+                        {{ session.character.hp }} HP
+                    </div>
+                </div>
+                <p>Dégâts : {{ session.character.attack }}</p>
+                {% if session.turn == 0 %}
+                    <div class="message">À votre tour de jouer !</div>
+                    <a class="btn" href="{% url 'attack' session.id %}">Attaquer</a>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <h2>{{ session.enemy.name }}</h2>
+                <div class="hp-bar">
+                    <div class="hp-bar-inner" style="width: {{ session.enemy.hp|floatformat:0 }}%; background: #f44336;">
+                        {{ session.enemy.hp }} HP
+                    </div>
+                </div>
+                <p>Dégâts : {{ session.enemy.attack }}</p>
+                {% if session.turn != 0 %}
+                    <div class="message">Tour de l'ennemi...</div>
+                    <a class="btn" href="{% url 'attack' session.id %}">Continuer</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>

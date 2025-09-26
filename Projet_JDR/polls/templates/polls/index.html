@@ -1,20 +1,90 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Projet JDR</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #d0e0ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        form {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 250px;
+            font-size: 1em;
+        }
+
+        button, .btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: #007bff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        button:hover, .btn:hover {
+            background: #0056b3;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Bienvenue</h1>
     <p>Veuillez renseigner le nom du joueur :</p>
-    <form action="{% url 'setName' %}" method="post">
+    <form action="{% url 'createGame' %}" method="post">
         {% csrf_token %}
         <label for="character_name">Nom de ton personnage :</label>
         <input type="text" id="character_name" name="character_name" required>
-        <button type="submit">Valider</button>
+        <button id="button" type="submit">Lancer la partie</button>
     </form>
-    <p>Je suis le joueur {{player.getName}}</p>
-    <p>Ennemis : {{ennemi.getName}} hp : {{ennemi.getHp}}</p>
-   <a href="{% url 'attack' %}">Attack</a>
+<script src="{% static 'polls/script.js' %}"></script>
 </body>
+
 </html>
